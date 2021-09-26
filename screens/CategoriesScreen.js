@@ -1,16 +1,14 @@
 import React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, FlatList } from 'react-native';
+import { CATEGORIES } from '../data/dummy-data';
 
-const CategoriesScreen = (props) => {
-    return (
-        <View style={styles.screen}>
-            <Text>This is the Categories Screen</Text>
-            <Button
-                title="The Category Meals Screen"
-                onPress={() => props.navigation.navigate('Categories Meals')}
-            />
-        </View>
-    );
+const CategoriesScreen = (data) => {
+    const renderCategory = (category) => {
+        return (<View>
+            <Text>{category.index + 1} - {category.item.title}</Text>
+        </View>);
+    };
+    return <FlatList data={CATEGORIES} numcolumns={2} renderItem={renderCategory} />;
 };
 
 const styles = StyleSheet.create({
