@@ -1,24 +1,31 @@
 import React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, FlatList } from 'react-native';
 import { StackActions } from '@react-navigation/native';
+import { MEALS } from '../data/dummy-data';
+import MealCard from '../components/MealCard'
 
-const CategoriesMealScreen = ({ navigation }) => {
-    const popAction = StackActions.pop(1);
+const CategoriesMealScreen = ({ route }) => {
+    const categoryID = route.params.id;
+    const meals = MEALS.filter((meal) => {
+        return meal.categoryIds.includes(categoryID);
+    });
+
+    const renderMealItems = (data) => {
+        return (
+            <MealCard title={data.item.title}
+                duration={data.item.duration}
+                complexity={data.item.complexity}
+                affordability={data.item.affordability}
+                imageUrl={data.item.imageUrl} />
+        );
+    };
+
     return (
         <View style={styles.screen}>
-            <Text>This is the Categories Meal Screen</Text>
-            <Button
-                title="Go Back"
-                onPress={() => navigation.dispatch(popAction)}
-            />
-            <Button
-                title="Go Forward"
-                onPress={() => navigation.navigate('Meal Details')}
-            />
+            <FlatList data={meals} renderItem={renderMealItems} />
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     screen: {
         flex: 1,

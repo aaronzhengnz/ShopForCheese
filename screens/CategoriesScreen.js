@@ -1,22 +1,15 @@
 import React from 'react';
-import { Text, View, StyleSheet, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { CATEGORIES } from '../data/dummy-data';
+import CategoryGridTile from '../components/CategoryGridTile';
 
-const CategoriesScreen = (data) => {
-    const renderCategory = (category) => {
-        return (<View>
-            <Text>{category.index + 1} - {category.item.title}</Text>
-        </View>);
+const CategoriesScreen = ({ navigation }) => {
+    const renderCategory = (data) => {
+        return <CategoryGridTile item={data.item} onItemPressed={() => {
+            navigation.navigate('Categories Meals', data.item);
+        }} />;
     };
-    return <FlatList data={CATEGORIES} numcolumns={2} renderItem={renderCategory} />;
+    return <FlatList data={CATEGORIES} numColumns={2} renderItem={renderCategory} />;
 };
-
-const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
-});
 
 export default CategoriesScreen;
